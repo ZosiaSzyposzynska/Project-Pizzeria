@@ -58,6 +58,7 @@ const select = {
       thisProduct.id = id;
       thisProduct.data = data;
 
+
       thisProduct.renderInMenu();
       thisProduct.getElements();
       thisProduct.initAccordion();
@@ -117,17 +118,17 @@ const select = {
 
       /* find active product (product that has active class) */
 
-      const activeProduct = document.querySelector(select.menuProduct.wrapperActive);
+      const activeProduct = document.querySelector('.product.active');
       
 
       /* if there is active product and it's not thisProduct.element, remove class active from it */
     
         if (activeProduct !== null && activeProduct !== thisProduct.element){
-          activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
+          activeProduct.classList.remove('active');
         }
       
       /* toggle active class on thisProduct.element */
-      thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
+      thisProduct.element.classList.toggle('active');
 
     });
 
@@ -182,15 +183,15 @@ const select = {
       console.log(optionId, option);
 
       // check if the option is selected
-      if(formData[paramId].includes(optionId)) { 
+      if(formData[paramId].includes(optionId) && optionId !== option.default) { 
         console.log('Wybrano opcję:', optionId); 
       }
       // if we select an option that is not default, increase the price by the price of this option
-      if(optionId != settings.amountWidget.defaultValue){
+      if(optionId != option.default){
         price += option.price;
       }
       // if we deselect an option that is the default, reduce the price
-      if(!formData[paramId].includes(optionId) && settings.amountWidget.defaultValue){
+      if(!formData[paramId].includes(optionId) && option.default){
         price -= option.price;
       }
 
