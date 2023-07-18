@@ -183,12 +183,9 @@ const select = {
       const option = param.options[optionId];
       console.log(optionId, option);
 
-      // check if the option is selected
+     
+ // check if the option is selected
       if(formData[paramId].includes(optionId) && !option.default) { 
-        console.log('Wybrano opcję:', optionId); 
-      }
-      // if we select an option that is not default, increase the price by the price of this option
-      if(optionId != option.default){
         price += option.price;
       }
       // if we deselect an option that is the default, reduce the price
