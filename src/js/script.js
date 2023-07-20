@@ -43,8 +43,8 @@ const select = {
   const settings = {
     amountWidget: {
       defaultValue: 1,
-      defaultMin: 1,
-      defaultMax: 9,
+      defaultMin: 0,
+      defaultMax: 10,
     }
   };
 
@@ -63,6 +63,7 @@ const select = {
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderFrom();
+      thisProduct.initAmountWidget();
       thisProduct.processOrder();
 
 
@@ -102,6 +103,7 @@ const select = {
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.amountWidgetElem  = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
 
 
@@ -145,7 +147,8 @@ const select = {
     });
 
     for(let input of thisProduct.formInputs){
-      input.addEventListener('change', function(){
+      input.addEventListener('change', function(event){
+        event.preventDefault();
       thisProduct.processOrder();
     });
     }
@@ -158,7 +161,19 @@ const select = {
 
   }
 
+   initAmountWidget(){
+    const thisProduct = this;
+    thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+  
 
+  thisProduct.amountWidgetElem.addEventListener('updated', function(event){
+     event.preventDefault();
+      thisProduct.processOrder();
+      
+    });
+
+
+  }
 
 
   processOrder(){
@@ -208,14 +223,108 @@ const select = {
     }
   }
 
-
+  price *= thisProduct.amountWidget.value;
   // update calculated price in the HTML
-  thisProduct.priceElem.innerHTML = price;}
+  thisProduct.priceElem.innerHTML = price;
+  }
+ 
   
+
+
 }
 
+   
+ 
+  class AmountWidget{
+    constructor(element){
+      const thisWidget = this;
+      console.log('AmountWidget:', thisWidget);
+      console.log('constructor arguments:', element);
+      thisWidget.getElements(element);
+      thisWidget.setValue(settings.amountWidget.defaultValue);
+     
+      thisWidget.initActions();
+      
+    }
+
+
+   getElements(element){
+    const thisWidget = this;
+
+    thisWidget.element = element;
+    thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+    thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+    thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+
+    
+}
+
+  initActions(){
+    const thisWidget = this;
+
+    thisWidget.input.addEventListener('change', function(event){
+      event.preventDefault();
+      thisWidget.setValue(thisWidget.input.value);
+    });
+
+    thisWidget.linkDecrease.addEventListener('click', function(event){
+      event.preventDefault();
+      thisWidget.setValue(parseInt(thisWidget.input.value) - 1);
+    });
+
+    thisWidget.linkIncrease.addEventListener('click', function(event){
+      event.preventDefault();
+    
+     thisWidget.setValue(parseInt(thisWidget.input.value) + 1);
+    });
+
+  }
+
+   announce() {
+  const thisWidget = this;
+  const event = new Event('updated');
+  thisWidget.element.dispatchEvent(event);
+}
 
   
+
+  setValue(value){
+    const thisWidget = this;
+
+    const newValue = parseInt(value);
+
+    /* TODO: ADD VALIDATION */
+
+    thisWidget.value = newValue;
+    thisWidget.input.value = thisWidget.value;
+
+    /* check if the value is diffetent from what it is already in thisWidget.value and if newValue is not null*/
+
+    if(thisWidget.value !== newValue && !isNaN(newValue)){
+      
+      thisWidget.value = newValue;
+      
+      
+   
+    } else if (newValue <= settings.amountWidget.defaultMin) {
+      
+      thisWidget.value = settings.amountWidget.defaultMin;
+      
+    } else if (newValue >= settings.amountWidget.defaultMax) {
+    
+      thisWidget.value = settings.amountWidget.defaultMax;
+      
+    } 
+    
+    thisWidget.input.value = thisWidget.value;
+    thisWidget.announce();
+    
+  
+  }
+
+
+
+  }
 
 
   const app = {
