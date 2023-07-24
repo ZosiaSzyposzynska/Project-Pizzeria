@@ -76,6 +76,11 @@ const settings = {
   cart: {
     defaultDeliveryFee: 20,
   },
+  db: {
+  url: '//localhost:3131',
+  products: 'products',
+  orders: 'orders',
+  },
   // CODE ADDED END
 };
 
@@ -430,6 +435,9 @@ const templates = {
     thisCart.dom.wrapper = element;
     thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
     thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
+    thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+    thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
+    thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);
     thisCart.totalNumber = 0;
     thisCart.subtotalPrice = 0;
     thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
@@ -453,6 +461,12 @@ const templates = {
     thisCart.dom.productList.addEventListener('remove', function(event){
       event.preventDefault();
       thisCart.remove(event.detail.cartProduct);
+      
+    });
+
+    thisCart.dom.form.addEventListener('submit', function(event){
+      event.preventDefault();
+      thisCart.sendOrder();
       
     });
 
@@ -515,6 +529,52 @@ const templates = {
 
 
   }
+
+
+  sendOrder(){
+    const thisCart = this;
+
+    const url = settings.db.url + '/' + settings.db.orders;
+
+    const payload = {
+
+      address: thisCart.dom.address.value,
+      phone: thisCart.dom.phone.value,
+      totalPrice: thisCart.totalPrice,
+      subtotalPrice: thisCart.subtotalPrice,
+      totalNumber: thisCart.totalNumber,
+      deliveryFee: thisCart.deliveryFee,
+      products: [],
+
+    };
+
+    for(let prod of thisCart.products) {
+      payload.products.push(prod.getData());
+    }
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    fetch(url, options)
+    .then(response => response.json())
+    .then(data => {
+      console.log('Response from server:', data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+  }
+
+
+
+
+
 }
 
 
@@ -589,6 +649,23 @@ const templates = {
 
     }
 
+    getData(){
+      const thisCartProduct = this;
+
+      return {
+      id: thisCartProduct.id,
+      name: thisCartProduct.name,
+      price: thisCartProduct.price,
+      priceSingle: thisCartProduct.price,
+      amount: thisCartProduct.amount,
+      params: thisCartProduct.params,
+
+      };
+
+
+
+    }
+
 
     
 
@@ -598,15 +675,31 @@ const templates = {
   
 
 
-  const app = {
-    initMenu: function(){
-      const thisApp = this;
-      
+ const app = {
+  initMenu: function() {
+    const thisApp = this;
+    const url = settings.db.url + '/' + settings.db.products;
 
-      for (let productData in thisApp.data.products){
-        new Product(productData, thisApp.data.products[productData]);
-      }
-    },
+    fetch(url)
+      .then(function(rawResponse) {
+        return rawResponse.json();
+      })
+      .then(function(parsedResponse) {
+        console.log('parsed response', parsedResponse);
+
+        /* save parsedResponse as thisApp.data.products */
+        thisApp.data.products = parsedResponse;
+
+        /* execute initMenu method */
+        for (let productData in thisApp.data.products) {
+          new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
+        }
+
+        
+      });
+
+    console.log('thisApp.data', JSON.stringify(thisApp.data));
+  },
 
     init: function(){
       const thisApp = this;
@@ -619,7 +712,8 @@ const templates = {
 
     initData: function(){
       const thisApp = this;
-      thisApp.data = dataSource;
+      thisApp.data = {};
+      
     },
 
     initCart: function(){
