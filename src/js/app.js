@@ -36,30 +36,10 @@ activatePage: function(pageId){
 
   initMenu: function () {
     const thisApp = this;
-    const url = settings.db.url + settings.db.product;
-
-
-    fetch(url)
-      .then(function (rawResponse) {
-        return rawResponse.json();
-      })
-      .then(function (parsedResponse) {
-        console.log('parsed response', parsedResponse);
-
-        /* save parsedResponse as thisApp.data.products */
-        thisApp.data.products = parsedResponse;
-
-        /* execute initMenu method */
-        for (let productData in thisApp.data.products) {
-          new Product(
-            thisApp.data.products[productData].id,
-            thisApp.data.products[productData]
-          );
-          
-        }
-      });
-
-    console.log('thisApp.data', JSON.stringify(thisApp.data));
+    for(let productData in thisApp.data.products){
+      new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
+    }
+   
   },
 
   init: function () {
@@ -74,6 +54,25 @@ activatePage: function(pageId){
   initData: function () {
     const thisApp = this;
     thisApp.data = {};
+     const url = settings.db.url + '/' + settings.db.products;
+
+
+    fetch(url)
+      .then(function (rawResponse) {
+        return rawResponse.json();
+      })
+      .then(function (parsedResponse) {
+        console.log('parsed response', parsedResponse);
+
+        /* save parsedResponse as thisApp.data.products */
+        thisApp.data.products = parsedResponse;
+
+       
+          
+        
+      });
+
+    console.log('thisApp.data', JSON.stringify(thisApp.data));
   },
 
   initCart: function () {
@@ -85,7 +84,7 @@ activatePage: function(pageId){
     thisApp.productList = document.querySelector(select.containerOf.menu);
 
     thisApp.productList.addEventListener('add-to-cart', function (event) {
-      thisApp.cart.add(event.detail.product); // Zmienione z app.cart na thisApp.cart
+      thisApp.cart.add(event.detail.product); 
     });
   },
 };
