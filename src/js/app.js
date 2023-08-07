@@ -1,18 +1,49 @@
-import { settings, select } from './settings.js';
+import { settings, select, classNames } from '../js/settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
 
+const app = {
+  initPages: function(){
+     const thisApp = this;
 
- const app = {
-  initMenu: function() {
+     thisApp.pages = document.querySelector(select.containerOf.pages).children;
+     thisApp.navLinks = document.querySelectorAll(select.nav.links);
+     thisApp.activatePage(thisApp.pages[0].id);
+
+    
+  },
+
+activatePage: function(pageId){
+  const thisApp = this;
+  /* add class active to matching pages */
+    for(let page of thisApp.pages){
+
+      page.classList.toggle(classNames.pages.active, page.id == pageId);  
+    
+    }
+  /* add class active to links */
+    for(let link of thisApp.navLinks){
+
+      link.classList.toggle(
+        classNames.nav.active, 
+        link.getAttribute('href') == '#' + pageId
+      );
+    
+    }
+  
+},
+
+
+  initMenu: function () {
     const thisApp = this;
-    const url = settings.db.url + '/' + settings.db.products;
+    const url = settings.db.url + settings.db.product;
+
 
     fetch(url)
-      .then(function(rawResponse) {
+      .then(function (rawResponse) {
         return rawResponse.json();
       })
-      .then(function(parsedResponse) {
+      .then(function (parsedResponse) {
         console.log('parsed response', parsedResponse);
 
         /* save parsedResponse as thisApp.data.products */
@@ -20,44 +51,43 @@ import Cart from './components/Cart.js';
 
         /* execute initMenu method */
         for (let productData in thisApp.data.products) {
-          new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
+          new Product(
+            thisApp.data.products[productData].id,
+            thisApp.data.products[productData]
+          );
+          
         }
-
-        
       });
 
     console.log('thisApp.data', JSON.stringify(thisApp.data));
   },
 
-    init: function(){
-      const thisApp = this;
-    
+  init: function () {
+    const thisApp = this;
 
-      thisApp.initData();
-      thisApp.initMenu();
-      thisApp.initCart();
-    },
+    thisApp.initData();
+    thisApp.initMenu();
+    thisApp.initCart();
+    thisApp.initPages();
+  },
 
-    initData: function(){
-      const thisApp = this;
-      thisApp.data = {};
-      
-    },
+  initData: function () {
+    const thisApp = this;
+    thisApp.data = {};
+  },
 
-    initCart: function(){
-      const thisApp = this;
+  initCart: function () {
+    const thisApp = this;
 
-      const cartElem = document.querySelector(select.containerOf.cart); 
-      thisApp.cart = new Cart(cartElem);
+    const cartElem = document.querySelector(select.containerOf.cart);
+    thisApp.cart = new Cart(cartElem);
 
-      thisApp.productList = document.querySelector(select.containerOf.menu);
+    thisApp.productList = document.querySelector(select.containerOf.menu);
 
-      thisApp.productList.addEventListener('add-to-cart', function(event){
-        app.cart.add(event.detail.product);
-      });
-    }
+    thisApp.productList.addEventListener('add-to-cart', function (event) {
+      thisApp.cart.add(event.detail.product); // Zmienione z app.cart na thisApp.cart
+    });
+  },
+};
 
-  };
-
-  
-  app.init();
+app.init();
