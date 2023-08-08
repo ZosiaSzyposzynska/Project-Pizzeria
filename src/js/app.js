@@ -1,6 +1,7 @@
 import { settings, select, classNames } from '../js/settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
+import Booking from './components/Booking.js';
 
 const app = {
   initPages: function(){
@@ -8,7 +9,33 @@ const app = {
 
      thisApp.pages = document.querySelector(select.containerOf.pages).children;
      thisApp.navLinks = document.querySelectorAll(select.nav.links);
-     thisApp.activatePage(thisApp.pages[0].id);
+     const idFromHash = window.location.hash.replace('#/', '');
+     let pageMatchingHash = thisApp.pages[0].id;
+
+     for(let page of thisApp.pages){
+      if(page.id == idFromHash){
+        pageMatchingHash = page.id;
+        break;
+      }
+     }
+     thisApp.activatePage(pageMatchingHash);
+
+     for(let link of thisApp.navLinks){
+      link.addEventListener('click', function(event){
+        const clickedElement = this;
+        event.preventDefault();
+
+        /* get page id from href */
+        const id = clickedElement.getAttribute('href').replace('#', '');
+        /* run thisApp.activate */
+        thisApp.activatePage(id);
+
+        /* change URL hash */
+        window.location.hash = '#/' + id;
+      });
+      
+     
+     }
 
     
   },
@@ -44,11 +71,11 @@ activatePage: function(pageId){
 
   init: function () {
     const thisApp = this;
-
+    thisApp.initBooking();
     thisApp.initData();
-    thisApp.initMenu();
     thisApp.initCart();
     thisApp.initPages();
+    
   },
 
   initData: function () {
@@ -66,7 +93,7 @@ activatePage: function(pageId){
 
         /* save parsedResponse as thisApp.data.products */
         thisApp.data.products = parsedResponse;
-
+        thisApp.initMenu();
        
           
         
@@ -75,7 +102,7 @@ activatePage: function(pageId){
     console.log('thisApp.data', JSON.stringify(thisApp.data));
   },
 
-  initCart: function () {
+  initCart: function (){
     const thisApp = this;
 
     const cartElem = document.querySelector(select.containerOf.cart);
@@ -87,6 +114,15 @@ activatePage: function(pageId){
       thisApp.cart.add(event.detail.product); 
     });
   },
+
+initBooking: function(){
+  const thisApp = this;
+  const bookingWidget = document.querySelector(select.containerOf.booking);
+  thisApp.booking = new Booking (bookingWidget);
+
+}
+
+
 };
 
 app.init();
