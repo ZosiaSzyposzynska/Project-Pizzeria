@@ -83,6 +83,7 @@ export const classNames = {
   booking: {
     loading: 'loading',
     tableBooked: 'booked',
+    selectedTable: 'selected',
   },
   nav: {
     active: 'active',
@@ -104,15 +105,12 @@ export const settings = {
     defaultDeliveryFee: 20,
   },
   db: {
-    url: '//localhost:3131',
-    // port: 3000,
-    products: 'products',
-    orders: 'orders',
+    url: 'http://localhost:3131',
     
-        product: 'product',
-        order: 'order',
-        booking: 'booking',
-        event: 'event',
+        products: 'products',
+        orders: 'orders',
+        bookings: 'bookings',
+        events: 'events',
         dateStartParamKey: 'date_gte',
         dateEndParamKey: 'date_lte',
         notRepeatParam: 'repeat=false',
