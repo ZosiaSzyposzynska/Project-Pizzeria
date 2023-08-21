@@ -1,5 +1,5 @@
 
-import { settings } from "../settings.js";
+
 class BaseWidget {
     constructor(wrapperElement, initialValue){
        const thisWidget = this;
@@ -9,8 +9,7 @@ class BaseWidget {
         thisWidget.correctValue = initialValue;
 
         
-       thisWidget.getElements(); 
-       thisWidget.setValue(settings.amountWidget.defaultValue);
+      thisWidget.getElements();
        thisWidget.initActions();
 
     }
@@ -26,10 +25,11 @@ class BaseWidget {
     
     const newValue = thisWidget.parseValue(value);
 
-    if (!isNaN(newValue) && thisWidget.isValid(newValue)) {
+    if (thisWidget.isValid(newValue)) {
         if (thisWidget.correctValue !== newValue) {
             thisWidget.correctValue = newValue;
             thisWidget.announce();
+            console.log(newValue);
         }
 
         thisWidget.renderValue();
