@@ -15,7 +15,7 @@ class DatePicker extends BaseWidget{
   getElements(){
     const thisWidget = this;
     thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.datePicker.input);
-
+    
   }
 
   initActions(){
