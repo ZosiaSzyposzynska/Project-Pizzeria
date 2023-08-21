@@ -173,6 +173,10 @@
         }
   
       }
+      &.selected{
+        background-color: green;
+      }
+      
     }
   
     [data-table="1"] {
@@ -198,3 +202,5 @@
     @include flex(row, flex-start, space-between);
     margin: ($base-size * 4) auto;
   }
+
+ 
