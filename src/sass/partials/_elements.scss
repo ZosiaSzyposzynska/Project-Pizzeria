@@ -1,5 +1,5 @@
 /* Buttons */
-
+@import 'settings.scss';
 .btn-primary {
   @include btn($color-dark, $color-light, $color-dark);
 }

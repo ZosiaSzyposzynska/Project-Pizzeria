@@ -1,0 +1,199 @@
+@import './settings';
+
+
+.home-wrapper {
+  margin: ($base-size * 3.5) auto;
+  padding: ($base-size * 6) ($base-size * 4);
+  border-radius: $radius;
+  background: $color-light;
+}
+.home-boxes {
+  margin: auto;
+  margin-bottom: 102px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 604px;
+  height: 246px;
+
+  .box {
+    text-decoration-line: none;
+    border-radius: $radius;
+    width: 299px;
+    height: 119px;
+    background-size: cover;
+    overflow: hidden;
+
+    &:hover .box-text {
+      transform: translateY(-20px);
+    }
+    &:hover .text-hidden {
+      transform: translateY(-45px);
+    }
+
+    .text-hidden {
+      text-align: center;
+      font-size: 14px;
+      color: $color-light;
+      transition: $transition;
+    }
+
+    .box-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      height: 100%;
+      font-family: $font-header;
+      color: $color-light;
+      text-transform: uppercase;
+      font-size: 26px;
+      letter-spacing: -0.65px;
+      text-align: center;
+      transition: $transition;
+    }
+  }
+  .box-down {
+    display: flex;
+    flex-direction: column;
+    width: 604px;
+    height: 120px;
+    color: $color-light;
+    background-color: $color-main;
+    border-radius: $radius;
+    margin-top: 6px;
+    letter-spacing: normal;
+    text-align: center;
+    text-transform: uppercase;
+    font-style: normal;
+    line-height: normal;
+
+    .information {
+      font-family: $font-header;
+      font-size: 26px;
+      font-weight: $font-bold;
+      letter-spacing: -0.65px;
+    }
+    .data {
+      margin-top: -10px;
+      font-family: $font-text;
+      font-size: 14px;
+      font-weight: $font-light;
+      letter-spacing: normal;
+    }
+  }
+
+  .box--left {
+    margin-right: 3px;
+    background-image: url('../../images/assets/pizza-1.jpg');
+  }
+  .box--right {
+    margin-left: 3px;
+    background-image: url('../../images/assets/pizza-2.jpg');
+  }
+}
+
+.carousel-opinion {
+  display: flex;
+  flex-direction: row;
+  &-img {
+    height: 193px;
+    width: 193px;
+    object-fit: cover;
+  }
+  &-texts {
+    display: flex;
+    flex-direction: column;
+    width: 412px;
+    padding-left: 34px;
+    font-family: $font-text;
+    color: $color-dark;
+    font-size: 14px;
+
+    &-title {
+      margin-top: 5px;
+      text-transform: uppercase;
+      font-weight: $font-bold;
+    }
+
+    &-description {
+      font-weight: $font-normal;
+      line-height: 23px;
+      margin: 0;
+    }
+
+    &-signature {
+      font-style: italic;
+      font-weight: $font-normal;
+    }
+  }
+}
+.home-gallery {
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 102px;
+  margin-bottom: 31px;
+  height: 398px;
+  width: 604px;
+
+  .photo-box {
+    position: relative;
+    height: 193px;
+    width: 193px;
+
+    .photo {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+    &:hover .background-shadow {
+      opacity: 0.7;
+    }
+    .background-shadow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: $color-dark;
+      opacity: 0;
+      transition: $transition;
+    }
+
+    .icon-shadow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      font-size: 20px;
+      transition: $transition;
+
+      &:hover {
+        opacity: 1;
+      }
+      i {
+        color: $color-main;
+
+        transition: $transition;
+        &:not(:last-of-type) {
+          margin-right: 10px;
+        }
+        &:hover {
+          transform: scale(1.5);
+          color: red;
+        }
+      }
+    }
+  }
+}
+.instagram-link {
+  font-family: $font-text;
+  color: $color-main;
+  font-size: 14px;
+}
