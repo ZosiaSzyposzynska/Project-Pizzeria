@@ -1,0 +1,218 @@
+/* Variables */
+/* Mixins */
+/* Helpers */
+.no-spacing {
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes flipdown {
+  0% {
+    opacity: 0;
+    transform-origin: top center;
+    transform: rotateX(-90deg);
+  }
+  5% {
+    opacity: 1;
+  }
+  80% {
+    transform: rotateX(8deg);
+  }
+  83% {
+    transform: rotateX(6deg);
+  }
+  92% {
+    transform: rotateX(-3deg);
+  }
+  100% {
+    transform-origin: top center;
+    transform: rotateX(0deg);
+  }
+}
+.home-wrapper {
+  margin: 42px auto;
+  padding: 72px 48px;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.home-boxes {
+  margin: auto;
+  margin-bottom: 102px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 604px;
+  height: 246px;
+}
+.home-boxes .box {
+  text-decoration-line: none;
+  border-radius: 4px;
+  width: 299px;
+  height: 119px;
+  background-size: cover;
+  overflow: hidden;
+}
+.home-boxes .box:hover .box-text {
+  transform: translateY(-20px);
+}
+.home-boxes .box:hover .text-hidden {
+  transform: translateY(-45px);
+}
+.home-boxes .box .text-hidden {
+  text-align: center;
+  font-size: 14px;
+  color: #fff;
+  transition: all 0.3s;
+}
+.home-boxes .box .box-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  height: 100%;
+  font-family: "Oswald", sans-serif;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 26px;
+  letter-spacing: -0.65px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.home-boxes .box-down {
+  display: flex;
+  flex-direction: column;
+  width: 604px;
+  height: 120px;
+  color: #fff;
+  background-color: #ff6b6b;
+  border-radius: 4px;
+  margin-top: 6px;
+  letter-spacing: normal;
+  text-align: center;
+  text-transform: uppercase;
+  font-style: normal;
+  line-height: normal;
+}
+.home-boxes .box-down .information {
+  font-family: "Oswald", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.65px;
+}
+.home-boxes .box-down .data {
+  margin-top: -10px;
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: normal;
+}
+.home-boxes .box--left {
+  margin-right: 3px;
+  background-image: url("../../images/assets/pizza-1.jpg");
+}
+.home-boxes .box--right {
+  margin-left: 3px;
+  background-image: url("../../images/assets/pizza-2.jpg");
+}
+
+.carousel-opinion {
+  display: flex;
+  flex-direction: row;
+}
+.carousel-opinion-img {
+  height: 193px;
+  width: 193px;
+  object-fit: cover;
+}
+.carousel-opinion-texts {
+  display: flex;
+  flex-direction: column;
+  width: 412px;
+  padding-left: 34px;
+  font-family: "Lato", sans-serif;
+  color: #333;
+  font-size: 14px;
+}
+.carousel-opinion-texts-title {
+  margin-top: 5px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.carousel-opinion-texts-description {
+  font-weight: 400;
+  line-height: 23px;
+  margin: 0;
+}
+.carousel-opinion-texts-signature {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.home-gallery {
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 102px;
+  margin-bottom: 31px;
+  height: 398px;
+  width: 604px;
+}
+.home-gallery .photo-box {
+  position: relative;
+  height: 193px;
+  width: 193px;
+}
+.home-gallery .photo-box .photo {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.home-gallery .photo-box:hover .background-shadow {
+  opacity: 0.7;
+}
+.home-gallery .photo-box .background-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #333;
+  opacity: 0;
+  transition: all 0.3s;
+}
+.home-gallery .photo-box .icon-shadow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  font-size: 20px;
+  transition: all 0.3s;
+}
+.home-gallery .photo-box .icon-shadow:hover {
+  opacity: 1;
+}
+.home-gallery .photo-box .icon-shadow i {
+  color: #ff6b6b;
+  transition: all 0.3s;
+}
+.home-gallery .photo-box .icon-shadow i:not(:last-of-type) {
+  margin-right: 10px;
+}
+.home-gallery .photo-box .icon-shadow i:hover {
+  transform: scale(1.5);
+  color: red;
+}
+
+.instagram-link {
+  font-family: "Lato", sans-serif;
+  color: #ff6b6b;
+  font-size: 14px;
+}
+
+/*# sourceMappingURL=home.css.map */
