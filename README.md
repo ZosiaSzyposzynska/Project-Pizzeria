@@ -1,6 +1,5 @@
 # Project Pizzeria
-## Project on Replit
-https://project-pizzeria.zosiaszyposzyns.repl.co/
+
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
